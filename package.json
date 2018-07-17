@@ -1,0 +1,42 @@
+{
+  "name": "hrr32-rubeus",
+  "version": "1.0.0",
+  "description": "A greenfield app to get and display civic data",
+  "main": "/server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisamurao/HRR32-Rubeus.git"
+  },
+  "keywords": [
+    "vote",
+    "civic",
+    "data",
+    "election"
+  ],
+  "author": "HRR-32 Team Hagrid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrisamurao/HRR32-Rubeus/issues"
+  },
+  "homepage": "https://github.com/chrisamurao/HRR32-Rubeus#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "sequelize": "^4.38.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^5.1.0",
+    "request": "^2.87.0",
+    "webpack": "^4.16.1",
+    "webpack-cli": "^3.0.8"
+  }
+}
