@@ -1,12 +1,11 @@
 //Add dependencies
 const express = require('express');
 const app = express();
-const mongodb = require('../db/index.js');
-const apiHelpers = require(/*find out what its called*/);
+const db = require('../db/index.js');
+//const apiHelpers = require(/*find out what its called*/);
 const bodyParser = require('body-parser');
 
-
-app.use(express.static(__dirname + '../client/dist'));
+app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json()) //or some other type
 
 
