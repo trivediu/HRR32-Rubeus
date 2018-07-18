@@ -3,6 +3,7 @@ CREATE DATABASE greenfield;
 
 USE greenfield;
 
+-- Create Table called users
 CREATE TABLE users (
   id int NOT NULL AUTO_INCREMENT,
   username varchar (250) UNIQUE NOT NULL,
