@@ -95,7 +95,6 @@ class App extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({ zip: this.element.value });
-
     // axios.get('/api', {
     //   params: {
     //     zip: this.state.zip
@@ -106,12 +105,12 @@ class App extends React.Component {
     //   this.setState({ data: response })
     // })
 
-    // axios.post('/saveUser', {
-    //   zip: this.state.zip
-    // })
-    // .then(function (response) {
-    //   console.log(response);
-    // })
+    axios.post('/saveUser', {
+      zip: this.state.zip
+    })
+    .then(function (response) {
+      console.log(response);
+    })
   }
 
   render () {

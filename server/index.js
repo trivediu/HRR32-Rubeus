@@ -28,21 +28,28 @@ app.listen(port, () => {
 //STATUS: to be integrated with front-end
 app.get('/', (req, res) => {
 
-    console.log('GET / to server', res);
+    // console.log('GET / to server', res);
 
 });
 
 //DESCRIPTION: This will respond to user input on the front-end and send back the appropriate data. req.body will be our friend here.
 //STATUS: to be integrated with front end
 app.post('/saveUser', (req, res) => {
+    //const data = req.body;
+    console.log(req);
+    const data = {
+            name: 'Uday Trivedi2',
+            password: 'ABCDEF2',
+            zipcode: '917102'
+           };
 
-    console.log('POST to /, req.body is:', req.body)
-    console.log('response to / from server', res);
+    const cb = () => {
+        console.log('success data inserted!');
+    }
 
-    let sendCallBack = res.send.bind(res)
-    //db.save(req.body, callback)
+    //db.insertData(data, cb);
 
-})
+});
 
 
 //DESCRIPTION: This post will grab the user form data (zip code currently)
@@ -64,7 +71,7 @@ app.post('/', (req, res) => {
 //STATUS:
 app.post('/', (req, res, next) => {
 
-    console.log('POST to /SOMEOTHERROUTE, req.body is:', req.body)
+    //console.log('POST to /SOMEOTHERROUTE, req.body is:', req.body)
   });
 
 
@@ -72,9 +79,9 @@ app.post('/', (req, res, next) => {
 //STATUS:
 app.put('/', (req, res) => {
 
-    console.log('PUT to /, req.body is:', req.body)
-    console.log('PUT to /, res is:', res)
+    // console.log('PUT to /, req.body is:', req.body)
+    // console.log('PUT to /, res is:', res)
 
 
-    console.log('response to / from server', res);
+    // console.log('response to / from server', res);
 })
