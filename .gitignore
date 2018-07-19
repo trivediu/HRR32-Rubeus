@@ -33,4 +33,5 @@ bower_components/
 config/civic.js
 
 #bundle
-client/dist/bundle.js
+bundle.js
+package-lock.json
