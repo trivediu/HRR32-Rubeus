@@ -102,11 +102,10 @@ eval("\n\nvar _createClass = function () { function defineProperties(target, pro
 /*!**************************!*\
   !*** ./lib/apiHelper.js ***!
   \**************************/
-/*! exports provided: officesInfo, officialIndices */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"officesInfo\", function() { return officesInfo; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"officialIndices\", function() { return officialIndices; });\n\n\n  function officesInfo(data, arr) {\n    var offices = data.offices;\n    var arrOfOffices = [];\n    for(var i = 0; i < arr.length; i++){\n      arrOfOffices.push(data.offices[arr[i]].name);\n    }\n    return arrOfOffices;\n  }\n\n  function officialIndices(data, arr) {\n    var offices = data.offices;\n    var arrOfOfficialIndices = [];\n    for(var i = 0; i < arr.length; i++){\n      for(var k = 0; k < data.offices[arr[i]].officialIndices.length; k++){\n        arrOfOfficialIndices.push(data.offices[arr[i]].officialIndices[k]);\n\n      }\n    }\n    console.log(arrOfOfficialIndices);\n    return arrOfOfficialIndices;\n  }\n\n\n\n//# sourceURL=webpack:///./lib/apiHelper.js?");
+eval("var getData = () => console.log('hello world');\n\n\n\nmodule.exports = {\n  getData: getData\n}\n\n//# sourceURL=webpack:///./lib/apiHelper.js?");
 
 /***/ }),
 
