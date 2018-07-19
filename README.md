@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Derrek Tran
+  - __Scrum Master__: Christopher Amurao
+  - __Development Team Members__: Mubeen Ali, Uday Trivedi
 
 ## Table of Contents
 
@@ -20,17 +20,12 @@
 
 ## Usage
 
-> Some usage instructions
+> After Installing Dependencies, run npm start. For local deployments, the default port is 3000.
 
 ## Requirements
 
 - Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
-
-## Development
+- TODO
 
 ### Installing Dependencies
 
@@ -44,7 +39,7 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/HRR32-Rubeus/HRR32-Rubeus/issues)
 
 
 ## Contributing
