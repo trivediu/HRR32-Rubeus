@@ -34,21 +34,37 @@ app.get('/', (req, res) => {
 
 //DESCRIPTION: This will respond to user input on the front-end and send back the appropriate data. req.body will be our friend here.
 //STATUS: to be integrated with front end
-app.post('/saveUser', (req, res) => {
-    //const data = req.body;
-    console.log(req);
-    const data = {
-            name: 'Uday Trivedi2',
-            password: 'ABCDEF2',
-            zipcode: '917102'
-           };
+// app.post('/saveUser', (req, res) => {
+//     //const data = req.body;
+//     console.log(req.body);
+//     const data = {
+//             name: 'Uday Trivedi2',
+//             password: 'ABCDEF2',
+//             zipcode: '917102'
+//            };
 
-    const cb = () => {
-        console.log('success data inserted!');
-    }
+//     const cb = () => {
+//         console.log('success data inserted!');
+//     }
 
-    //db.insertData(data, cb);
+//     //db.insertData(data, cb);
 
+// });
+
+app.post('/saveUser', (req, res, next) => {
+
+    // console.log('POST to /, req.body is:', req.body)
+    // console.log('response to / from server', res);
+
+    let send = res.send.bind(res)
+    let zip = req.body //this might need to change depending on its label
+
+    apiSearch.searchByZip(zip, (data) => {
+      res.status(201);
+      send(apiHelpers.getOfficials('state', data))//is this context ok?
+    });
+
+    //uday will add the thing here
 });
 
 
