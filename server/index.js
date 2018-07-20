@@ -41,14 +41,11 @@ app.post('/saveUser', (req, res, next) => {
     // console.log('POST to /saveUser, req.body is:', req.body.zip)
     // console.log('response to / from server', res);
 
-    //let send = res.send.bind(res)
     let zip = req.body.zip;
 
     apiSearch.searchByZip(zip, (response) => {
       res.status(201);
-      //console.log('response.data', response);
-      //apiHelpers.getOfficials('state', response);
-      res.send(apiHelpers.getOfficials('state', response))//is this context ok?
+      res.send(apiHelpers.getOfficials('state', response))
     });
 
     //uday will add the thing here
