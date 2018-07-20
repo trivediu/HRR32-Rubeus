@@ -88,13 +88,25 @@ class App extends React.Component {
           title: 'Commissioner of General Land Office' } ]
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
 
 
   handleSubmit(event) {
+    console.log('current state:', this.state.zip);
+
+    // var postCB = () => {
+    //   axios.post('/saveUser', {
+    //     zip: this.state.zip
+    //   })
+    //   .then(function (response) {
+    //   console.log(response);
+    //   })
+    // }
+
     event.preventDefault();
-    this.setState({ zip: this.element.value });
+    //this.setState({zip: this.element.value}, postCB);
     // axios.get('/api', {
     //   params: {
     //     zip: this.state.zip
@@ -113,6 +125,11 @@ class App extends React.Component {
     })
   }
 
+  handleChange(event) {
+    this.setState({zip: event.target.value});
+    //console.log('Zip Value: ', this.state.zip);
+  }
+
   render () {
     var division = ("ocd-division/country:us/state:" + this.state.state);
     return (
@@ -121,7 +138,7 @@ class App extends React.Component {
         <form style={styles.zip} onSubmit={this.handleSubmit}>
           <label>
             ZipCode:<br></br>
-            <input type="text" ref={el => this.element = el} />
+            <input type="text" onChange={this.handleChange} ref={el => this.element = el} />
           </label>
           <input type="submit" value="Submit" />
         </form>
@@ -181,3 +198,22 @@ const styles = {
 }
 
 ReactDOM.render(<App/>, document.getElementById('app'));
+
+//   render () {
+//     var division = ("ocd-division/country:us/state:" + this.state.state);
+//     return (
+//       <div style={styles.master}>
+//         <h1 style={styles.headers}>App v1</h1>
+//         <form style={styles.zip} onSubmit={this.handleSubmit}>
+//           <label>
+//             ZipCode:<br></br>
+//             <input type="text" ref={el => this.element = el} />
+//           </label>
+//           <input type="submit" value="Submit" />
+//         </form>
+//         <p>{this.state.zip}</p>
+//       <ListView data={this.state.data} state={this.state.state}/>
+//       </div>
+//     )
+//   }
+// }
