@@ -7,6 +7,7 @@ const app = express();
 const db = require('../db/index.js');
 const apiHelpers = require('../lib/apiHelper.js');
 const bodyParser = require('body-parser');
+const apiSearch = require('../lib/apiSearch.js')
 
 app.use(bodyParser.json()) //This should be adjusted towards the type of req.body we will get
 app.use(express.static(__dirname + '/../client/dist'));
@@ -59,9 +60,9 @@ app.post('/saveUser', (req, res, next) => {
     let send = res.send.bind(res)
     let zip = req.body //this might need to change depending on its label
 
-    apiSearch.searchByZip(zip, (data) => {
+    apiSearch.searchByZip(zip, (response) => {
       res.status(201);
-      send(apiHelpers.getOfficials('state', data))//is this context ok?
+      send(apiHelpers.getOfficials('state', response.data))//is this context ok?
     });
 
     //uday will add the thing here
