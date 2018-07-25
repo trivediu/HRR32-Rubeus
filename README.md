@@ -24,18 +24,28 @@
 
 ## Requirements
 
-- Node 0.10.x
-- TODO
+- Node 8.11.1
+- npm 5.6.0
 
 ### Installing Dependencies
 
 From within the root directory:
 
-```sh
-sudo npm install -g bower
-npm install
-bower install
+First, to install dependencies, run in console:
 ```
+npm install
+```
+
+Start the server with:
+```
+npm start
+```
+
+For local deployments, in a browser, go to
+```
+ http://localhost:3000
+```
+to launch the app.
 
 ### Roadmap
 

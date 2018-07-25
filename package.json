@@ -4,7 +4,7 @@
   "description": "A greenfield app to get and display civic data",
   "main": "/server/index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --watch",
+    "test": "jest",
     "start": "node server/index.js",
     "develop": "webpack --mode development --watch",
     "server-dev": "nodemon server/index.js",
@@ -46,6 +46,8 @@
     "babel-loader": "^7.1.5",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.2.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
