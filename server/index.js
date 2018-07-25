@@ -5,9 +5,37 @@ const bodyParser = require('body-parser');
 const app = express();
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+
+/************************************************
+Passport Related (Below)
+************************************************/
+const config = require('../config/civic.js');
+
+app.use(session({
+  secret: config.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+
 const passport = require('passport');
+const passportSetup = require('../config/passport-setup.js');
+
+
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+/************************************************/
+
+
+
+
+
+
 
 app.use(express.static(`${__dirname}/../client/dist`));
+
 // app.use(bodyParser.text()) this is an alternative to json
 const db = require('../db/index.js');
 const apiHelpers = require('../lib/apiHelper.js');
@@ -32,14 +60,6 @@ app.listen(port, () => {
 
 // ////******route requests*********///
 
-
-// DESCRIPTION: This will repond to get requests and send back the appropriate data. We may need to use the database.
-// STATUS: to be integrated with front-end
-app.get('/', (req, res) => {
-
-  // console.log('GET / to server', res);
-
-});
 
 app.post('/login', (req, res, next) => {
   console.log(req.body);
@@ -70,35 +90,19 @@ app.post('/saveUser', (req, res, next) => {
 });
 
 
-// DESCRIPTION: This post will grab the user form data (zip code currently)
-//             and insert it into the database along with some temporary dummy data
+/******************************************************************************
+Name: Passport Authentication Routes
+Description:   Will determine the routes to direct user to and send them back
+               upon authentication.
+******************************************************************************/
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
-// STATUS:      Still in progress - will be finalized upon oauth implementation
-app.post('/', (req, res) => {
-  // console.log the data that has been received
-  // console.log(req.body);
-
-
-  // console.log('response to / from server', res);
-
-});
-
-
-// DESCRIPTION: This feature has yet to be claimed
-// STATUS:
-app.post('/', (req, res, next) => {
-
-  // console.log('POST to /SOMEOTHERROUTE, req.body is:', req.body)
-});
-
-
-// DESCRIPTION:This feature has yet to be claimed
-// STATUS:
-app.put('/', (req, res) => {
-
-  // console.log('PUT to /, req.body is:', req.body)
-  // console.log('PUT to /, res is:', res)
-
-
-  // console.log('response to / from server', res);
-});
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log('hello you submitted!');
+    res.send('you are now logged in');
+    console.log(req.user);
+    //res.redirect('/');
+  });
