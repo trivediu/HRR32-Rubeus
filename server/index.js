@@ -55,7 +55,7 @@ app.use(session({
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`App listening on ${port}`);
+  console.log(`Hello from ${port}!`);
 });
 
 // ////******route requests*********///
@@ -68,24 +68,23 @@ app.post('/login', (req, res, next) => {
 // STATUS: to be integrated with front end
 
 app.post('/saveUser', (req, res, next) => {
-  // console.log('POST to /saveUser, req.body is:', req.body.zip)
-  // console.log('response to / from server', res);
-  console.log(typeof (req.body));
+
+  console.log("POST to /saveUser, req.body is", req.body);
   const zip = req.body.zip;
+  const region = req.body.region;
 
   apiSearch.searchByZip(zip, (response) => {
     if (response.error) {
       console.log(response.error);
       res.send(JSON.stringify('Please enter valid ZIP code.'));
     } else {
-      console.log(response);
       res.status(201);
-      res.send(apiHelpers.getOfficials('state', response));
+      console.log(response);
+      res.send(apiHelpers.getOfficials(region, response));
     }
   });
 
   // uday will add the thing here
-
   // db.insertData(data, cb);
 });
 
@@ -104,5 +103,5 @@ app.get('/auth/google/callback',
     console.log('hello you submitted!');
     res.send('you are now logged in');
     console.log(req.user);
-    //res.redirect('/');
+    res.redirect('/');
   });
