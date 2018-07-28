@@ -109,8 +109,14 @@ app.get('/auth/google/callback',
     res.redirect('/');
   });
 
+
 app.get('/test', utils.authCheck, (req, res) => {
-  console.log('passed authCheck')
-  console.log(req.user)
-  res.send(req.user)
-})
+  console.log('passed authCheck');
+  res.send(req.user);
+});
+
+
+//Temp function for Mubeen front-end prior to RR implementation
+app.get('/checkuser', utils.authCheck, (req, res) => {
+  res.send('user exists');
+});
