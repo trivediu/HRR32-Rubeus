@@ -9,7 +9,7 @@ const authCheck = (req, res, next) => {
 };
 
 module.exports = {
-  authCheck,
-}
+  authCheck: authCheck
+};
 
 //perhaps add encryption here
