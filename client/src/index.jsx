@@ -5,6 +5,9 @@ import ZipForm from './components/ZipForm.jsx';
 import LoginForm from './components/LoginForm.jsx';
 import ListView from './components/ListView.jsx';
 import MapContainer from './components/MapContainer.jsx';
+import TownHallContainer from './components/townhall/TownHallContainer.jsx';
+import './App.css';
+
 
 const styles = {
   master: {
@@ -26,6 +29,7 @@ const styles = {
     paddingTop: 100
   }
 };
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -66,8 +70,8 @@ class App extends React.Component {
         <div className="nav" style={styles.headers}>
           <h1>App v1.1</h1>
           <a href="auth/google">Login with Google</a>
-
         </div>
+        <TownHallContainer />
         <MapContainer/>
         <ZipForm onSubmit={(zip, region) => this.handleSubmit(zip, region)} />
         <LoginForm />

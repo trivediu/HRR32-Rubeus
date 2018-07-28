@@ -1,42 +1,48 @@
 // Add dependencies
 const express = require('express');
-const bodyParser = require('body-parser');
-
 const app = express();
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const utils = require('./utils.js')
+const db = require('../db/index.js');
+const apiHelpers = require('../lib/apiHelper.js');
+const dataHelpers = require('../lib/dataHelpers.js')
+const apiSearch = require('../lib/apiSearch.js');
+const config = require('../config/civic.js');
 
 /************************************************
 Passport Related (Below)
 ************************************************/
-const config = require('../config/civic.js');
 
 app.use(session({
   secret: config.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: false }
 }));
 
 const passport = require('passport');
 const passportSetup = require('../config/passport-setup.js');
 
-
-//initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser(config.SESSION_SECRET));
 
 /************************************************/
 
-
-
-
-
-
-
 app.use(express.static(`${__dirname}/../client/dist`));
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+
+
+
 
 // app.use(bodyParser.text()) this is an alternative to json
+
 const db = require('../db/index.js');
 const apiHelpers = require('../lib/apiHelper.js');
 const dataHelpers = require('../lib/dataHelpers.js')
@@ -54,12 +60,19 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+
 const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
   console.log(`Hello from ${port}!`);
 });
 
 // ////******route requests*********///
+
+app.get('/login', (req, res, next) => {
+  console.log('login route called')
+  res.send('login page')
+})
 
 
 app.post('/login', (req, res, next) => {
@@ -104,7 +117,13 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     console.log('hello you submitted!');
-    res.send('you are now logged in');
-    console.log(req.user);
+    //res.send('you are now logged in');
+    console.log('req.user is', req.user);
     res.redirect('/');
   });
+
+app.get('/test', utils.authCheck, (req, res) => {
+  console.log('passed authCheck')
+  console.log(req.user)
+  res.send(req.user)
+})

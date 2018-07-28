@@ -45,16 +45,19 @@ export default class ZipForm extends Component {
             value="Submit" />
         </form>
         <div
+          className="tempbtn"
           style={{ display: "inline-block" }}
           onClick={() => { this.setState({ region: 'county' }) }}>
           Set State to COUNTY
         </div>
         <div
+          className="tempbtn"
           style={{display: "inline-block"}}
           onClick={() => { this.setState({ region: 'state' })}}>
           Set State to STATE
         </div>
         <div
+          className="tempbtn"
           style={{ display: "inline-block" }}
           onClick={() => { this.setState({ region: 'country' }) }}>
           Set State to COUNTRY

@@ -18,7 +18,8 @@ passport.use(new GoogleStrategy({
       //upon user providing passport details, check if user exists
       //if they do, take them to login page, if not, then create their
       //account automatically and then redirect them to login page
-       db.doesExist(profile.id)
+      console.log('passport authenticate callback') 
+      db.doesExist(profile.id)
         .then(userRowID => {
           if (userRowID === false) {
             //the user does not exist, create an entry
@@ -42,10 +43,19 @@ Description: assign a unique value to the cookie rather than using google
              such as facebook, git, etc.
 ******************************************************************************/
 
+
 passport.serializeUser((userRowId, done) => {
   //modify below code to extract ID to insert into a cookie to serialize user
-  let userRowData = db.getUser(userRowId);
-  done(null, userRowData);
+  console.log('serializeUser called', userRowId)
+
+  // let userRowData = db.getUser(userRowId).then(user => user );
+  // done(null, userRowData);
+  
+  db.getUser(userRowId).then(user => {
+    done(null, user);
+  });
+
+
 });
 
 passport.deserializeUser((userRowID, done) => {
@@ -53,6 +63,8 @@ passport.deserializeUser((userRowID, done) => {
   //findUserById and pass that user in the done function
 
   //grab all the user row iinformation, based on their userID
-
-  done(null, {user:2, name: 'Chris'});
+console.log('deserialize user called', userRowID)
+  done(null, userRowID);
 });
+
+
