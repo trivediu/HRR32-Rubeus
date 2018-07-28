@@ -5,3 +5,24 @@ div {
 .tempbtn {
   border: solid black 2px;
 }
+
+.master {
+  align-content: center;
+  font-family: "Verdana, Geneva, sans-serif";
+}
+
+.headers {
+  background-color: red;
+  align-content: center;
+  color: white;
+  margin: 0;
+  padding: 10;
+}
+
+.zip {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40;
+  padding-top: 100;
+}
