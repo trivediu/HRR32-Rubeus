@@ -1,7 +1,7 @@
 const config = require('./civic.js');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const db = require('../db/index.js');
+const db = require('../db/users.js');
 
 
 /******************************************************************************
@@ -18,7 +18,7 @@ passport.use(new GoogleStrategy({
       //upon user providing passport details, check if user exists
       //if they do, take them to login page, if not, then create their
       //account automatically and then redirect them to login page
-      console.log('passport authenticate callback')
+      console.log('passport authenticate callback');
       db.doesExist(profile.id)
         .then(userRowID => {
           if (userRowID === false) {

@@ -32,7 +32,6 @@ CREATE TABLE questions (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `townhall_id` int NOT NULL,
-  `subject` LONGTEXT,
   `question` LONGTEXT NOT NULL,
   `response` LONGTEXT DEFAULT NULL,
   PRIMARY KEY (id),
@@ -53,13 +52,11 @@ INSERT INTO townhalls (name, createDate)
   VALUES ('President Trump Townhall', '2018-06-18 10:34:09'),
          ('Vice President Joe Biden Townhall', '2018-07-21 15:43:43');
 
-INSERT INTO questions (user_id, townhall_id, subject, question, response)
+INSERT INTO questions (user_id, townhall_id, question, response)
   VALUES (
       (SELECT id FROM users WHERE userid LIKE 'testUserID-2'),
 
       (SELECT id FROM townhalls WHERE name LIKE 'President Trump Townhall'),
-
-      'Test Subject',
 
       'Test Question',
 
@@ -71,8 +68,6 @@ INSERT INTO questions (user_id, townhall_id, subject, question, response)
       (SELECT id FROM users WHERE userid LIKE 'testUserID-1'),
 
       (SELECT id FROM townhalls WHERE name LIKE 'Vice President Joe Biden Townhall'),
-
-      'Test Subject2',
 
       'Test Question2',
 
