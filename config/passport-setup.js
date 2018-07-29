@@ -1,7 +1,6 @@
 const config = require('./civic.js');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const dbMAIN = require('../db/index.js');
 const db = require('../db/users.js');
 
 
