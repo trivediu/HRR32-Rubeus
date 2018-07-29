@@ -31,9 +31,9 @@ export default class ViewTownHall extends Component {
       }
     })
     .then(questionsAnswers => {
-      console.log('questions received', questionsAnswers)
-      questionsAnswers.length > 0 ?
-        this.setState({questions: questionsAnswers})
+      let qData = questionsAnswers.data.slice();
+      qData.length > 0 ?
+        this.setState({questions: qData})
         : null
     })
   }
@@ -41,7 +41,12 @@ export default class ViewTownHall extends Component {
   renderQuestions () {
     this.getQuestions(this.props.townHallName);
 
-    return <div>Rendered Town Hall WIll Be: {this.props.townHallName}</div>
+    if (this.state.questions.length > 0) {
+      return <div>Rendered Town Hall Will Be: {this.props.townHallName}</div>
+    } else {
+      return <div>No questions!</div>
+    }
+
   }
 
   //render
@@ -54,7 +59,6 @@ export default class ViewTownHall extends Component {
         This will RETRIEVE a list of QUESTIONS for the SELECTED TOWN HALL, and map them to components.
 
         {this.renderQuestions()}
-        <TownHallQuestion />
       </div>
     )
   }
