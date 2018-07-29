@@ -4,8 +4,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const utils = require('./utils.js')
+const utils = require('./utils.js');
+
+//Database Dependences Below
 const db = require('../db/users.js');
+const townhalls = require('../db/townhalls.js');
+//**********************************************
+
 const apiHelpers = require('../lib/apiHelper.js');
 const dataHelpers = require('../lib/dataHelpers.js')
 const apiSearch = require('../lib/apiSearch.js');
@@ -80,9 +85,6 @@ app.post('/reps', (req, res, next) => {
       res.send(apiHelpers.getOfficials(region, response));
     }
   });
-
-  // uday will add the thing here
-  // db.insertData(data, cb);
 });
 
 
@@ -177,3 +179,25 @@ app.get('/zip', function(req, res) {
     }
   });
 });
+
+/******************************************************************************
+Name:  TownHall Query Routes
+Description:  Implements the ability to access data from the database for the
+              townhall
+*******************************************************************************/
+app.get('/alltownhalls', function(req, res) {
+  townhalls.getNames()
+    .then(names => res.send(names))
+    .catch(err => {res.status(500).send(err)});
+});
+
+app.post('/question', function(req, res) {
+  const question = String(req.body.question);
+  const hallName = String(req.body.townHallName);
+  //change the user ID to be from hard coded to user id
+  const userRowId = Number(req.body.userRowId);
+  townhalls.createQuestion(question, userRowId, hallName).then(results => res.status(201).send(results));
+});
+
+
+

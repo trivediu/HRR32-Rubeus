@@ -45,8 +45,8 @@ Additional Description:
 ********************************************************************************/
 var doesExist = (profileId) => {
   return new Promise((resolve, reject) => {
+    //console.log('Type of Profile ID:', profileId);
     const inserts = [profileId];
-    //const sql = 'SELECT * FROM users WHERE EXISTS (SELECT * FROM USERS WHERE userid LIKE (?))';
     const sql = 'SELECT id FROM users WHERE userid LIKE (?)';
     c.connection.query(sql, inserts, (err, results, data) => {
         if (err) {
