@@ -20,13 +20,64 @@ CREATE TABLE users (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET=utf8;
 
+CREATE TABLE townhalls (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) NOT NULL,
+  `createDate` DATETIME NOT NULL,
+  `closeDate` DATETIME DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE questions (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `townhall_id` int NOT NULL,
+  `subject` LONGTEXT,
+  `question` LONGTEXT NOT NULL,
+  `response` LONGTEXT DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY  fk_user_id (user_id)
+    REFERENCES users(id),
+  FOREIGN KEY fk_townhall_id (townhall_id)
+    REFERENCES townhalls(id)
+) ENGINE=InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET=utf8;
+
 -- Insert Some Sample Data Into Users Database
 
--- INSERT INTO users (username, password, zipcode)
---   VALUES ('testUserName', 'testPassword', '11111');
 
 INSERT INTO users (userid, username, zip)
-  VALUES ('testUserId', 'testUserName', 'testZip');
+  VALUES ('testUserID-1', 'testUserName1', 'TestZip1'),
+         ('testUserID-2', 'testUserName2', 'TestZip2');
+
+INSERT INTO townhalls (name, createDate)
+  VALUES ('President Trump Townhall', '2018-06-18 10:34:09'),
+         ('Vice President Joe Biden Townhall', '2018-07-21 15:43:43');
+
+INSERT INTO questions (user_id, townhall_id, subject, question, response)
+  VALUES (
+      (SELECT id FROM users WHERE userid LIKE 'testUserID-2'),
+
+      (SELECT id FROM townhalls WHERE name LIKE 'President Trump Townhall'),
+
+      'Test Subject',
+
+      'Test Question',
+
+      'Test Answer'
+    ),
+
+
+  (
+      (SELECT id FROM users WHERE userid LIKE 'testUserID-1'),
+
+      (SELECT id FROM townhalls WHERE name LIKE 'Vice President Joe Biden Townhall'),
+
+      'Test Subject2',
+
+      'Test Question2',
+
+      'Test Answer2'
+  );
 
 
 
@@ -38,4 +89,8 @@ INSERT INTO users (userid, username, zip)
 Inform user to ensure how to start mysql server
 Inform user how to run schema file (and when to run it)
 Inform user how to access mysql database from within command line
+ */
+
+ /*
+ http://www.mysqltutorial.org/mysql-foreign-key/
  */
