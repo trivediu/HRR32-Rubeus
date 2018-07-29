@@ -30,9 +30,11 @@ export default class ViewTownHall extends Component {
         townHall: hallName
       }
     })
-    .then(q => {
-      //console.log(q)
-      //this.setState({questions: q.data})
+    .then(questionsAnswers => {
+      console.log('questions received', questionsAnswers)
+      questionsAnswers.length > 0 ?
+        this.setState({questions: questionsAnswers})
+        : null
     })
   }
 

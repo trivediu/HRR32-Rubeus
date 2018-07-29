@@ -211,12 +211,12 @@ app.post('/question', function(req, res) {
 app.get('/questions', function(req, res) {
   const townHallName = req.query.townHall;
 
-
     townhalls.getQuestions(townHallName)
-       .then(questions => {console.log(questions); res.send(questions)})
+       .then(questions => {
+          console.log(questions);
+          res.send(questions)
+        })
        .catch(() => res.status(500).send());
-
-
 });
 
 
