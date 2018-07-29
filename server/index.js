@@ -10,7 +10,7 @@ const apiHelpers = require('../lib/apiHelper.js');
 const dataHelpers = require('../lib/dataHelpers.js')
 const apiSearch = require('../lib/apiSearch.js');
 const config = require('../config/civic.js');
-
+const path = require("path");
 /************************************************
 Passport Related (Below)
 ************************************************/
@@ -55,12 +55,6 @@ app.listen(port, () => {
 });
 
 // ////******route requests*********///
-
-app.get('/login', (req, res, next) => {
-  console.log('login route called')
-  res.send('login page')
-})
-
 
 app.post('/login', (req, res, next) => {
   console.log(req.body);
@@ -119,4 +113,67 @@ app.get('/test', utils.authCheck, (req, res) => {
 //Temp function for Mubeen front-end prior to RR implementation
 app.get('/checkuser', utils.authCheck, (req, res) => {
   res.send('user exists');
+});
+
+
+
+
+/******************************************************************************
+Name:  React Router Redirect Routes
+Description:  Implements the ability to directly access a component via url
+              (e.g. localhost:3000/someUrl)
+*******************************************************************************/
+
+
+app.get('/main', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  });
+});
+
+
+app.get('/townhall', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  });
+});
+
+
+app.get('/dashboard', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  });
+});
+
+
+app.get('/map', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  });
+});
+
+
+app.get('/login', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  });
+});
+
+
+app.get('/zip', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/dist/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  });
 });
