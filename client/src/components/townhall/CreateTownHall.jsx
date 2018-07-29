@@ -12,24 +12,28 @@ export default class CreateTownHall extends Component {
   }
 
   renderView() {
-    // if (this.state.userType === 'user') {
-    //   return <UserCreateTownHall />
-    // } else if (this.state.userType === 'official') {
-    //   return <OfficialCreateTownHall />
-    // }
-    return (
-      <div>
-        <UserCreateTownHall />
-        <OfficialCreateTownHall />
-      </div>
-    )
+    console.log('renderview called ')
+    if (this.state.userType === 'user') {
+      return <UserCreateTownHall />
+    } else if (this.state.userType === 'official') {
+      return <OfficialCreateTownHall />
+    }
   }
 
   render() {
     return (
       <div style={{border:"dotted purple 2px"}}>
         This is the Create Town Hall Component. This will display either a question form or a create town hall form, depending on the user status. In this example, both views are shown.
+        <button
+          onClick={()=>{this.setState({userType: 'user'})}}>
+          Change type to User
+        </button>
+        <button
+          onClick={()=>{this.setState({userType: 'official'})}}>
+          Change type to Official
+        </button>
         {this.renderView()}
+
       </div>
     )
   }

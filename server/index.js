@@ -70,12 +70,12 @@ app.post('/login', (req, res, next) => {
 app.post('/reps', (req, res, next) => {
 
   console.log("POST to /saveUser, req.body is", req.body);
-  const locater = req.body.zip ? req.body.zip
+  const locator = req.body.zip ? req.body.zip
                   : req.body.location ? dataHelpers.abbrState(req.body.location, 'name')
                   : null;
   const region = req.body.region;
 
-  apiSearch.searchByZip(locater, (response) => {
+  apiSearch.searchByZip(locator, (response) => {
     if (response.error) {
       console.log(response.error);
       res.send(JSON.stringify('Please enter valid ZIP code.'));
@@ -87,7 +87,9 @@ app.post('/reps', (req, res, next) => {
   });
 });
 
-
+app.post('/townhall', utils.authCheck, (req, res, next) => {
+  console.log('req received')
+})
 /******************************************************************************
 Name: Passport Authentication Routes
 Description:   Will determine the routes to direct user to and send them back
@@ -99,12 +101,9 @@ app.get('/auth/google',
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log('hello you submitted!');
-    //res.send('you are now logged in');
     console.log('req.user is', req.user);
     res.redirect('/');
   });
-
 
 app.get('/test', utils.authCheck, (req, res) => {
   console.log('passed authCheck');
@@ -114,7 +113,8 @@ app.get('/test', utils.authCheck, (req, res) => {
 
 //Temp function for Mubeen front-end prior to RR implementation
 app.get('/checkuser', utils.authCheck, (req, res) => {
-  res.send('user exists');
+  console.log('passed authcheck')
+  req.user ? res.send(req.user) : res.send('whoops');
 });
 
 
@@ -186,16 +186,25 @@ Description:  Implements the ability to access data from the database for the
               townhall
 *******************************************************************************/
 app.get('/alltownhalls', function(req, res) {
+  console.log('alltownhalls GET')
   townhalls.getNames()
     .then(names => res.send(names))
     .catch(err => {res.status(500).send(err)});
 });
+
+app.post('/create', (req, res) => {
+  console.log('createtownhall posted, ', req.body)
+  res.send('createtown hall POST return')
+})
 
 app.post('/question', function(req, res) {
   const question = String(req.body.question);
   const hallName = String(req.body.townHallName);
   //change the user ID to be from hard coded to user id
   const userRowId = Number(req.body.userRowId);
+  //
+  console.log('question posted', req.body)
+  //
   townhalls.createQuestion(question, userRowId, hallName).then(results => res.status(201).send(results));
 });
 
@@ -206,8 +215,8 @@ app.get('/questions', function(req, res) {
   //COMMENT THIS OUT WHEN TESTING, THIS IS JUST HARDCODED TEST
   let townHallName = 'President Trump Townhall';
   townhalls.getQuestions(townHallName)
-    .then(questions => console.log(questions))
-    .catch(res.status(500).send());
+    .then(questions => res.send(questions))
+    .catch(() => res.status(500).send());
 
 
 });

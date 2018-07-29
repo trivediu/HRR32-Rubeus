@@ -117,10 +117,13 @@ var getQuestions = (hallName) => {
   });
 };
 
-
+const createTownHall = (title, creator, time) => {
+  //fill this in
+}
 
 module.exports = {
   getNames: getNames,
   createQuestion: createQuestion,
-  getQuestions: getQuestions
+  getQuestions: getQuestions,
+  createTownHall
 };

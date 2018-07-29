@@ -1,22 +1,9 @@
-import React, { Component } from 'react'
-
-const fakeData = [
-  {
-    townHallName: "Senator Jeff's town hall",
-    closesAt: "somedate here."
-  },
-  {
-    townHallName: "Governor Fred's town hall",
-    closesAt: "somedate here."
-  },
-  {
-    townHallName: "House James's town hall",
-    closesAt: "somedate here."
-  }
-];
+import React, { Component } from 'react';
+import axios from 'axios';
+import fakeData from './fakeData.js';
 
 //this is a helper stateless component
-const Options = props => <select>{props.open.map((hall, i) => <option key={i}>{hall.townHallName}</option>)}</select>;
+// const Options = props => <select value={this.state.selected}>{props.open.map((hall, i) => <option key={i}>{hall}</option>)}</select>;
 
 //This should query the db for a list of open town halls.
 //Town halls are opened by 'officials'.
@@ -27,22 +14,58 @@ export default class UserCreateTownHall extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openTownHalls : fakeData,
+      fakeTownHalls: fakeData,
+      townHalls: [],
+      selected: '',
+      question: '',
+      currentUser: 2,
     }
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   //When component mounts, it should query the database for available town halls.
   //With this array of town halls, it should reflect them into the options list
-  componentDidMount(){
-    //call get request to server
-    //let's use a route called /townhall
-
-    //received town halls, setState to new data
+  
+  componentDidMount() {
+    this.getTownHalls();
   }
 
-  handleSubmit(){
+  getTownHalls() {
+    //send get request to server
+    axios.get('/alltownhalls').then(halls => {
+      console.log(halls.data);
+      this.setState({ townHalls: halls.data })
+    })
+  }
+
+  handleSubmit(e) {
     //send data to server
     //tell it that you are a user and send it your question and which town hall it is for
+    e.preventDefault();
+    this.sendQuestion(this.state.question, this.state.selected)
+  }
+  
+  sendQuestion(inputQuestion, whichTownHall) {
+    console.log('sendQuestion called', inputQuestion, whichTownHall)
+    const data = {
+      question: inputQuestion,
+      townHallName: whichTownHall,
+      userRowId: this.state.currentUser
+    };
+    axios.post('/question', data)
+      .then(res => console.log(res))
+  }
+
+  handleSelect(e) {
+    this.setState({ selected: e.target.value });
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
   }
 
 
@@ -56,14 +79,30 @@ export default class UserCreateTownHall extends Component {
         <form>
           <fieldset>
             <legend>Ask a Town Hall:</legend>
-            Select a Town Hall: <Options open={this.state.openTownHalls} /><br/>
-            Question: <textarea placeholder="Enter a Question Here."/><br/>
-            <button>Submit</button>
+              Select a Town Hall: 
+              <select 
+                value={this.state.selected}
+                onChange={this.handleSelect}>
+                <option 
+                  value="" disabled defaultValue>Select a Town Hall
+                </option>
+                {this.state.townHalls.map((hall, i) => <option key={i}>{hall}</option>)}
+              </select> <br/>
+              Question: 
+              <textarea 
+                name="question"
+                placeholder="Enter a Question Here."
+                value={this.state.question}
+                onChange={e => this.handleChange(e)}/><br/>
+            <button
+              onClick={this.handleSubmit}
+            >Submit</button>
           </fieldset>
         </form>
       </div>
     )
   }
 }
+//<Options open={this.state.townHalls} /> <br />
 
-
+//<select value={this.state.selected}>{props.open.map((hall, i) => <option key={i}>{hall}</option>)}</select>

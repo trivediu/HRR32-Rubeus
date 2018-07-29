@@ -58,6 +58,9 @@ export default class LoginForm extends Component {
           onChange={this.setPassword} />
         <br></br>
         <button onClick={this.handleLogin}>login</button>
+        <div>
+          <a href="auth/google">Log in with Google</a>
+        </div>
       </div>
     )
   }
