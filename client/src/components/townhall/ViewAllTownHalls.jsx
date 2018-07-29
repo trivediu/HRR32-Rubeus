@@ -52,6 +52,7 @@ export default class ViewAllTownHalls extends Component {
     })
     .then(questionsAnswers => {
       let qData = questionsAnswers.data.slice();
+      console.log('new question data', qData);
       this.setState({questions: qData})
     })
   }

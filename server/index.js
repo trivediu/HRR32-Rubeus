@@ -193,7 +193,10 @@ app.get('/alltownhalls', function(req, res) {
 });
 
 app.post('/create', (req, res) => {
-  console.log('createtownhall posted, ', req.body)
+  //console.log('createtownhall posted, ', req.body.townHallName)
+  const townHallName = req.body.townHallName;
+  townhalls.createTownHall(townHallName)
+
   res.send('createtown hall POST return')
 })
 

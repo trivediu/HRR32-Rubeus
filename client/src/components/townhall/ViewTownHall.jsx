@@ -56,6 +56,8 @@ export default class ViewTownHall extends Component {
           <div key={i}>
             <div> Question: {qData.question} </div>
             <div> Answer:   {qData.answer ? qData.answer : 'ANSWER PENDING'} </div>
+            <div> TownHall: {qData.townHallName} </div>
+            <div> Created On: {qData.createDate} </div>
           </div>) : ''
         }
 
