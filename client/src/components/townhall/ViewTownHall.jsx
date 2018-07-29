@@ -13,24 +13,25 @@ export default class ViewTownHall extends Component {
       townHallName: '',
       questions: []
     }
-    console.log('Constructor called!');
-    this.renderQuestions = this.renderQuestions.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
   }
 
   componentDidMount() {
     //query list of questions for this particular town hall
     //console.log('viewtownhall mounted, current TownHall is:  ', this.props.townHall)
-    this.getQuestions(this.props.townHallName);
+    //this.getQuestions(this.props.townHallName);
   }
 
 
   getQuestions(hallName) {
+    console.log('axios called');
     axios.get('/questions', {
       params: {
         townHall: hallName
       }
     })
     .then(questionsAnswers => {
+
       let qData = questionsAnswers.data.slice();
       qData.length > 0 ?
         this.setState({questions: qData})
@@ -38,16 +39,8 @@ export default class ViewTownHall extends Component {
     })
   }
 
-  renderQuestions () {
-    this.getQuestions(this.props.townHallName);
 
-    if (this.state.questions.length > 0) {
-      return <div>Rendered Town Hall Will Be: {this.props.townHallName}</div>
-    } else {
-      return <div>No questions!</div>
-    }
 
-  }
 
   //render
     render() {
@@ -58,7 +51,14 @@ export default class ViewTownHall extends Component {
         This will map the list of questions to a list of elements.
         This will RETRIEVE a list of QUESTIONS for the SELECTED TOWN HALL, and map them to components.
 
-        {this.renderQuestions()}
+
+        { this.props.questions.length > 0 ? this.props.questions.map((qData, i) =>
+          <div key={i}>
+            <div> Question: {qData.question} </div>
+            <div> Answer:   {qData.answer ? qData.answer : 'ANSWER PENDING'} </div>
+          </div>) : ''
+        }
+
       </div>
     )
   }

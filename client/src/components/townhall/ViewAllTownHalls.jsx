@@ -23,7 +23,8 @@ export default class ViewAllTownHalls extends Component {
     super(props);
     this.state = {
       townHalls : [],
-      townHall: ''
+      townHall: '',
+      questions: []
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -43,7 +44,16 @@ export default class ViewAllTownHalls extends Component {
 
   handleClick(e) {
     this.setState({ townHall: e.target.textContent})
-    //console.log(this.state.townHall);
+
+    axios.get('/questions', {
+      params: {
+        townHall: this.state.townHall
+      }
+    })
+    .then(questionsAnswers => {
+      let qData = questionsAnswers.data.slice();
+      this.setState({questions: qData})
+    })
   }
 
   render() {
@@ -58,10 +68,12 @@ export default class ViewAllTownHalls extends Component {
         { this.state.townHalls.length > 0 ? this.state.townHalls.map((hall, i) =>
           <div key={i}> <span onClick={this.handleClick}>{hall}</span></div>) : ''}
 
-        <ViewTownHall townHallName={this.state.townHall}/>
+        <ViewTownHall townHallName={this.state.townHall} questions={this.state.questions}/>
 
       </div>
     )
   }
 }
 //http://derpturkey.com/react-pass-value-with-onclick/
+
+//

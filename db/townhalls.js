@@ -116,6 +116,7 @@ var getQuestions = (hallName) => {
 
 const createTownHall = (title, creator, time) => {
   //fill this in
+
 }
 
 module.exports = {
