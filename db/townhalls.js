@@ -74,13 +74,12 @@ var createQuestion = (questionBody, userRowId, hallName) => {
 Function Name: getQuestions
 Input:  Town Hall Name (string)
 
-Output:  an array composed of question arrays.
-          Each question array can be represented as:
-         [townHallQuestion, townHallQuestionAnswer]
+Output:  an array composed of question/answer objects for the townHall name
+         passed in.
 
-         if no answer has been provided to the question it will be
-         of only length 1 such as:
-         [townHallQuestion]
+         Each object within the array will contain a question
+         property and if that particular question has an answer, the object
+         will also contain an answer property.
 
 
 Description: Used to insert a question assigned to a
@@ -95,20 +94,18 @@ var getQuestions = (hallName) => {
       if (err) {
         reject(err);
       } else {
-        //Init a question array that will hold an array of questions and answers ('questionArray')
-        //(refer to the questionArray [] that is created in the forEach loop below)
+        //Init a question array that will hold objects of questions and answers
         let questions = [];
 
         results.forEach(rowData => {
-          let questionArray = [];
-          questionArray.push(rowData.question);
+          let tempObject = {};
+          tempObject.question = rowData.question;
 
-          /*Check if there is an answer, if there is push it in as a second element to the
-          question array, otherwise do nothing*/
-          rowData.response ? questionArray.push(rowData.response) : null;
+          /*Check if there is an answer, if there is create an answer property on the object*/
+          rowData.response ? tempObject.answer = rowData.response : null;
 
-          //now push the question array into the main array to be returned to the front end
-          questions.push(questionArray);
+          //now push the tempObject into the main array (that will be returned to frontEnd)
+          questions.push(tempObject);
         });
 
         resolve(questions);
