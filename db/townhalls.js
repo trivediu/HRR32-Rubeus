@@ -70,8 +70,57 @@ var createQuestion = (questionBody, userRowId, hallName) => {
 // };
 
 
+/**************************************************************************
+Function Name: getQuestions
+Input:  Town Hall Name (string)
+
+Output:  an array composed of question arrays.
+          Each question array can be represented as:
+         [townHallQuestion, townHallQuestionAnswer]
+
+         if no answer has been provided to the question it will be
+         of only length 1 such as:
+         [townHallQuestion]
+
+
+Description: Used to insert a question assigned to a
+             specific townHall and user
+***************************************************************************/
+var getQuestions = (hallName) => {
+  return new Promise ((resolve, reject) => {
+    hallName = String(hallName);
+    const inserts = [hallName];
+    const sql = 'SELECT townhall_id, question, response FROM questions q WHERE q.townhall_id =  (SELECT id FROM townhalls where name like (?))';
+    c.connection.query(sql, inserts, (err, results, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        //Init a question array that will hold an array of questions and answers ('questionArray')
+        //(refer to the questionArray [] that is created in the forEach loop below)
+        let questions = [];
+
+        results.forEach(rowData => {
+          let questionArray = [];
+          questionArray.push(rowData.question);
+
+          /*Check if there is an answer, if there is push it in as a second element to the
+          question array, otherwise do nothing*/
+          rowData.response ? questionArray.push(rowData.response) : null;
+
+          //now push the question array into the main array to be returned to the front end
+          questions.push(questionArray);
+        });
+
+        resolve(questions);
+      }
+    });
+  });
+};
+
+
 
 module.exports = {
   getNames: getNames,
-  createQuestion: createQuestion
+  createQuestion: createQuestion,
+  getQuestions: getQuestions
 };

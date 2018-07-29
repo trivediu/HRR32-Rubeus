@@ -199,5 +199,18 @@ app.post('/question', function(req, res) {
   townhalls.createQuestion(question, userRowId, hallName).then(results => res.status(201).send(results));
 });
 
+app.get('/questions', function(req, res) {
+  /*UNCOMMENT CODE ON LINE BELOW WHEN TESTING FROM FRONT END*/
+  //let townHallName = req.body.hallName;
+
+  //COMMENT THIS OUT WHEN TESTING, THIS IS JUST HARDCODED TEST
+  let townHallName = 'President Trump Townhall';
+  townhalls.getQuestions(townHallName)
+    .then(questions => console.log(questions))
+    .catch(res.status(500).send());
+
+
+});
+
 
 
