@@ -193,7 +193,10 @@ app.get('/alltownhalls', function(req, res) {
 });
 
 app.post('/create', (req, res) => {
-  console.log('createtownhall posted, ', req.body)
+  //console.log('createtownhall posted, ', req.body.townHallName)
+  const townHallName = req.body.townHallName;
+  townhalls.createTownHall(townHallName)
+
   res.send('createtown hall POST return')
 })
 
@@ -209,16 +212,14 @@ app.post('/question', function(req, res) {
 });
 
 app.get('/questions', function(req, res) {
-  /*UNCOMMENT CODE ON LINE BELOW WHEN TESTING FROM FRONT END*/
-  //let townHallName = req.body.hallName;
+  const townHallName = req.query.townHall;
 
-  //COMMENT THIS OUT WHEN TESTING, THIS IS JUST HARDCODED TEST
-  let townHallName = 'President Trump Townhall';
-  townhalls.getQuestions(townHallName)
-    .then(questions => res.send(questions))
-    .catch(() => res.status(500).send());
-
-
+    townhalls.getQuestions(townHallName)
+       .then(questions => {
+          console.log(questions);
+          res.send(questions)
+        })
+       .catch(() => res.status(500).send());
 });
 
 
