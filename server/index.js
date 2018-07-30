@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const utils = require('./utils.js');
+const server = require('http').createServer(app);
+const socket = require('socket.io');
+const io = socket(server);
 
 //Database Dependences Below
 const db = require('../db/users.js');
@@ -55,10 +58,22 @@ app.use(session({
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Hello from ${port}!`);
+// app.listen(port, () => {
+//   console.log(`Hello from ${port}!`);
+// });
+//*********live-chat ***********//
+io.on('connection', (client) => {
+  //emitting evnets to client
+  console.log(client.id);
+  console.log('socket io connection online!');
+  client.on('send_message', function(data) {
+    console.log('message from client received data:', data)
+    io.emit('receive_message', data);
+  })
 });
-
+ server.listen(port, () => {
+  console.log(`server listening from ${port}!`)
+});
 // ////******route requests*********///
 
 app.post('/login', (req, res, next) => {
@@ -221,6 +236,3 @@ app.get('/questions', function(req, res) {
         })
        .catch(() => res.status(500).send());
 });
-
-
-
