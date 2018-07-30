@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './App.css';
 import Routes from './components/routes/index.jsx';
 import axios from 'axios';
+import Nav from './Nav.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -33,14 +34,13 @@ class App extends React.Component {
   }
 
   render() {
-    return <div className="master">
-      <div className="headers">
-        <h1>App v1.1</h1>
+    return (
+      <div>
+        <Nav />
+        {this.state.isLoggedIn ? `Welcome, ${this.state.username}!` : "Log in!"}
+        <Routes isLoggedIn={this.state.isLoggedIn}/>
       </div>
-      {this.state.isLoggedIn ? `Welcome, ${this.state.username}!` : "Log in!"}
-      <Routes loggedIn={this.state.isLoggedIn}/>
-    </div>;
-  }
+    )}
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));

@@ -7,7 +7,7 @@ export default class LoginForm extends Component {
     super(props)
   
     this.state = {
-       
+       isLoggedIn: false
     };
 
     this.setUsername = this.setUsername.bind(this);
@@ -17,6 +17,9 @@ export default class LoginForm extends Component {
 
   ComponentDidMount(){
     console.log(this.state)
+    if(this.props.isLoggedIn) {
+      this.setState({isLoggedIn: true})
+    }
   }
   
   setUsername(event) {
@@ -44,24 +47,25 @@ export default class LoginForm extends Component {
   }
   render() {
     return (
-      <div>
-        <input
-          value={this.state.username}
-          type="text"
-          placeholder="username"
-          onChange={this.setUsername} />
-        <br></br>
-        <input
-          value={this.state.password}
-          type="text"
-          placeholder="password"
-          onChange={this.setPassword} />
-        <br></br>
-        <button onClick={this.handleLogin}>login</button>
-        <div>
-          <a href="auth/google">Log in with Google</a>
+
+        <div className="container">
+          <input
+            value={this.state.username}
+            type="text"
+            placeholder="username"
+            onChange={this.setUsername} />
+          <br></br>
+          <input
+            value={this.state.password}
+            type="text"
+            placeholder="password"
+            onChange={this.setPassword} />
+          <br></br>
+          <button onClick={this.handleLogin}>login</button>
+          <div>
+            <a href="auth/google">Log in with Google</a>
+          </div>
         </div>
-      </div>
     )
   }
 }

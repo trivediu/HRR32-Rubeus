@@ -38,9 +38,7 @@ export default class OfficialCreateTownHall extends Component {
 
   render() {
     return (
-      <div style={{border : "dashed green 2px"}}>
-        This is the Official Create Town Hall Component. <br/>
-        This will create an item in the database. <br/>
+      <div className="jumbotron">
         <form>
           <fieldset>
             <legend>Create a Town Hall:</legend>

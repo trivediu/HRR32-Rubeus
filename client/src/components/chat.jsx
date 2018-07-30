@@ -9,7 +9,8 @@ class Chat extends Component {
         this.state = {
             username: '',
             message: '',
-            messages: []
+            messages: [],
+            isLoggedIn: false,
         };
      
         this.socket = io('localhost:3000');
@@ -30,9 +31,16 @@ class Chat extends Component {
         this.setMessage = this.setMessage.bind(this);
     }
     componentDidMount () {
-        console.log('mounted')
-        axios.get('/auth/currentUser', function(userData) {
-            console.log(userData);
+      console.log('mounted', this.state.username)
+      axios.get('/checkuser')
+        .then(userData => {
+          console.log(userData);
+          if (userData.data[0].username) {
+            this.setState({
+              username: `${userData.data[0].username} 🇺🇸`,
+              isLoggedIn: true,
+            })
+          }
         })
     }
 
@@ -61,34 +69,37 @@ class Chat extends Component {
     }
 
     render () {
-         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-4">
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="card-title">Users Chat</div>
-                                <hr/>
-                                <div className="messages">
-                                    {this.state.messages.map(message => {
-                                        return (
-                                            <div>{message.author}: {message.message}</div>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                            <div className="card-footer">
-                                    <input type="text" placeholder="Username" className="form-control" onChange={this.setUsername} />
-                                    <br/>
-                                    <input type="text" placeholder="Message" className="form-control" onChange={this.setMessage}/>
-                                    <br/>
-                                    <button onClick={this.sendMessage} className="btn btn-primary form-control">Send</button>
+        return (
+          <div className="container">
+              <div className="row">
+                  <div className="col-8">
+                      <div className="card">
+                        <div className="card-body">
+                  <h4>User Chat:</h4>
+                  <div className="card-title"> {this.state.username ? `Chatting as: ${this.state.username}` : ''}</div>
+                            <hr/>
+                            <div className="messages">
+                                {this.state.messages.map(message => {
+                                    return (
+                                        <div>
+                                        <strong>{message.author}:</strong> {message.message}
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        );
+                        <div className="card-footer">
+                                {!this.state.isLoggedIn ? <input type="text" placeholder="Username" className="form-control" onChange={this.setUsername} /> : ''}
+                                <br/>
+                                <input type="text" placeholder="Message" className="form-control" onChange={this.setMessage}/>
+                                <br/>
+                                <button onClick={this.sendMessage} className="btn btn-primary form-control">Send</button>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      );
     
     }
 }

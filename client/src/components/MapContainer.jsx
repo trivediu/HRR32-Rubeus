@@ -5,6 +5,17 @@ import axios from 'axios';
 import ListView from './ListView.jsx';
 import colorHelper from './colorHelper.js'
 
+{/* <div>
+  This is the MapContainer Component. Enter a title here.
+          <ul>
+    User Stories
+            <li>When I click a state, I see the representatives for that state</li>
+    <li>When I hover over a state, I see the color red/blue according to their reps</li>
+    <li></li>
+  </ul>
+</div> */}
+
+
 /**
  Known bugs: Georgia doesn't work
 */
@@ -47,40 +58,23 @@ export default class MapContainer extends Component {
     })
   };
 
-  // statesCustomConfig = (state, color) => {
-  //   return {
-  //     "NJ": {
-  //       fill: "navy",
-  //       clickHandler: (event) => console.log('Custom handler for NJ', event.target.dataset)
-  //     },
-  //     [state]: {
-  //       fill: color,
-  //       clickHandler: (event) => console.log(`Custom handler for ${state}`, event.target.dataset)
-  //     }
-  //   };
-  // };
-
   render() {
     console.log('render called')
     return (
-      <div style={{border: "dotted blue 2px"}}>
+      <div className="container">
         <div>
-          This is the MapContainer Component. Enter a title here.
-          <ul>
-            User Stories
-            <li>When I click a state, I see the representatives for that state</li>
-            <li>When I hover over a state, I see the color red/blue according to their reps</li>
-            <li></li>
-            </ul>
+          {this.state.selectedState ? <h1>Selected: {this.state.selectedState}</h1> : <h1>Select A State!</h1>}
+          
         </div>
-        <USAMap 
-          onClick={this.mapHandler}
-          title={"Choose your state"} 
-          width={this.mapDimensions().width * .8}
-          height={this.mapDimensions().height * .8}
-          customize={{[this.state.selectedState]: {fill: colorHelper(this.state.data)}}}
-        />
-          You Chose {this.state.selectedState}
+        <div className="row text-center">
+          <USAMap 
+            onClick={this.mapHandler}
+            title={"Choose your state"} 
+            width={this.mapDimensions().width * .8}
+            height={this.mapDimensions().height * .8}
+            customize={{[this.state.selectedState]: {fill: colorHelper(this.state.data)}}}
+          />
+        </div>
         <ListView data={this.state.data}/>
       </div>
     )

@@ -14,7 +14,7 @@ export default class TownHallQuestion extends Component {
   //TODO STYLE THIS
   render() {
     return (
-      <div style={{ border: "dotted green 2px" }}>
+      <div className="container">
         <div>
           Question: {this.state.question}
         </div>

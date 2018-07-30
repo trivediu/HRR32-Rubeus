@@ -45,12 +45,7 @@ export default class ViewTownHall extends Component {
   //render
     render() {
     return (
-      <div style={{ border: "dotted blue 2px" }}>
-        This is the View (individual town hall) component. <br/>
-        This is a child of ViewAllTownHalls<br/>
-        This will map the list of questions to a list of elements.
-        This will RETRIEVE a list of QUESTIONS for the SELECTED TOWN HALL, and map them to components.
-
+      <div>
 
         { this.props.questions.length > 0 ? this.props.questions.map((qData, i) =>
           <div key={i}>

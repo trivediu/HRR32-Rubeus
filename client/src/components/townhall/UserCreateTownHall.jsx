@@ -71,15 +71,11 @@ export default class UserCreateTownHall extends Component {
 
   render() {
     return (
-      <div style={{border: "solid green 2px"}}>
-        This is the User Create Town Hall Component.
-        This will need to RETRIEVE a list of CURRENT TOWN HALLS.
-        This will need to SEND a QUESTION to a CURRENT TOWN HALL.
+      <div className="jumbotron">
 
         <form>
           <fieldset>
             <legend>Ask a Town Hall:</legend>
-              Select a Town Hall: 
               <select 
                 value={this.state.selected}
                 onChange={this.handleSelect}>
@@ -88,7 +84,6 @@ export default class UserCreateTownHall extends Component {
                 </option>
                 {this.state.townHalls.map((hall, i) => <option key={i}>{hall}</option>)}
               </select> <br/>
-              Question: 
               <textarea 
                 name="question"
                 placeholder="Enter a Question Here."
@@ -96,7 +91,7 @@ export default class UserCreateTownHall extends Component {
                 onChange={e => this.handleChange(e)}/><br/>
             <button
               onClick={this.handleSubmit}
-            >Submit</button>
+            >Submit Question</button>
           </fieldset>
         </form>
       </div>
