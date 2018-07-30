@@ -1,7 +1,8 @@
 //Database Connection and Functions
 var mysql = require('mysql');
 
-var connection = mysql.createConnection({
+//var connection = mysql.createConnection({
+var connection = mysql.createPool({
   host      : 'localhost',
   user      : 'root',
   password  : '',
